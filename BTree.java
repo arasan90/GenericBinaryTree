@@ -85,4 +85,8 @@ public class BTree <T extends Comparable<T>>  {
        }
     }
 
+    public void printTree (BTree root) {
+        
+    }
+
 }

@@ -8,6 +8,11 @@ public class BTree <T extends Comparable<T>>  {
     public static int maxDepth;
     private BTree parent;
 
+    /*
+     Constructor for the BTree class
+     @param obj: a comparable object
+     @return: an instance of the class BTree
+     */
     public BTree (T obj) {
         left = null;
         right = null;
@@ -18,37 +23,64 @@ public class BTree <T extends Comparable<T>>  {
         depthLevel = 0;
         maxDepth = 0;
     }
-
+    /*
+     Returns true if "this" node has a left child
+     @return: true if "this" has a left child, false otherwise
+     */
     private boolean hasLeft () {
         if (left != null)
                 return true;
         return false;
     }
+    /*
+    Returns true if "this" node has a right child
+    @return: true if "this" has a right child, false otherwise
+    */
     private boolean hasRight () {
         if (right != null)
             return true;
         return false;
     }
+    /*
+    getLeft returns the left child of "this" node
+    @return: BTree instance, left child of "this"
+     */
     public BTree getLeft() {
         return left;
     }
+    /*
+    getRight returns the right child of "this" node
+    @return: BTree instance, right child of "this"
+     */
     public BTree getRight() {
         return right;
     }
+    /*
+    getValue returns the value of "this" node
+    @return: the value recorded in "this" node
+     */
     public T getValue() {
         return value;
     }
-    public void setLeft(BTree left) {
+    /*
+    setLeft sets the left child of "this" node
+    @param left: the node that must be set as left child of "this" node
+     */
+    private void setLeft(BTree left) {
         this.left = left;
     }
-    public void setRight(BTree right) {
+    /*
+   setRight sets the right child of "this" node
+   @param right: the node that must be set as right child of "this" node
+    */
+    private void setRight(BTree right) {
         this.right = right;
     }
-    public void setMaxDepth(int currentDepth) {
-        if (currentDepth > maxDepth)
-            maxDepth = currentDepth;
-    }
 
+    /*
+    insert inserts a new node in the tree, in the right position as left/right child of another node
+    @param: node: a comparable object
+     */
     public void insert (BTree node)  {
 
            if (node.value.compareTo(value)< 0) {
@@ -60,7 +92,6 @@ public class BTree <T extends Comparable<T>>  {
                    node.parent = this;
                    node.isLeft = true;
                    left.depthLevel = depthLevel + 1;
-                   setMaxDepth(left.depthLevel);
 
                }
            }
@@ -73,13 +104,17 @@ public class BTree <T extends Comparable<T>>  {
                    node.parent = this;
                    node.isRight = true;
                    right.depthLevel = this.depthLevel + 1;
-                   setMaxDepth(right.depthLevel);
                }
            }
 
 
 
     }
+
+    /*
+    printOrderedValues prints the values in "this" tree in the console, ordered in an ascending way.
+    Must be called on the root node.
+     */
     public void printOrderedValues() {
         if (hasLeft())
             left.printOrderedValues();
@@ -87,6 +122,11 @@ public class BTree <T extends Comparable<T>>  {
         if (hasRight())
             right.printOrderedValues();
     }
+    /*
+    search looks for the desired value and returns the node whose value is the searched one
+    @param value: the value searched
+    @return: the node whose value is the one searched, or prints a message in the console if the value isn't in the tree
+     */
     public BTree search(T value) {
        try {
            if (value.compareTo(this.value) < 0)
@@ -104,7 +144,9 @@ public class BTree <T extends Comparable<T>>  {
        }
         return null;
     }
-
+    /*
+    remove removes "this" node from the tree, preserving the values order in the tree
+     */
     public void remove () {
         if (!this.hasRight() && !this.hasLeft()) {
             if (this.isRight)
@@ -142,12 +184,17 @@ public class BTree <T extends Comparable<T>>  {
 
 
     }
-
+    /*
+    findMinimum returns the node which value is the minimum in the subtree where the root is the node where this method is called
+    @param node: the node to be used as root of the subtree where to look for the minimum
+    @return: the node whose value is the minimum in the subtree
+     */
     private BTree findMinimum (BTree node) {
         while (node.hasLeft()){
             node = node.left;
         }
         return node;
     }
+
 
 }
